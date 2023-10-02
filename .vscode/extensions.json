@@ -1,0 +1,18 @@
+{
+    "recommendations": [
+        "aaron-bond.better-comments",
+        "alefragnani.bookmarks",
+        "ms-vscode-remote.remote-containers",
+        "johnpapa.vscode-peacock",
+        "enkia.tokyo-night",
+        "kamikillerto.vscode-colorize",
+        "kevinghadyani.vscode-colormate",
+        "mikestead.dotenv",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "yzhang.markdown-all-in-one",
+        "pkief.material-icon-theme",
+        "esbenp.prettier-vscode",
+        "tabnine.tabnine-vscode"
+    ]
+}
