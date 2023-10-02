@@ -7,4 +7,6 @@ export class AuthService {
     }
 
     login() {
-        const newLocal = `I'm logged in`;
+        return { msg: `I've logged in` };
+    }
+}
