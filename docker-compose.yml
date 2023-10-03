@@ -7,7 +7,16 @@ services:
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: fcc-nestjs-api
+            POSTGRES_DB: nestjs-api
+        networks:
+            - freecodecamp
+
+    nestjs-api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 3333:3333
         networks:
             - freecodecamp
 

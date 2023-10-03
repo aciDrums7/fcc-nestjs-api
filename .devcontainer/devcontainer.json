@@ -4,10 +4,19 @@
     "name": "fcc-nestjs-api",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
     "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+    // "dockerComposeFile": "docker-compose.yml",
+    // "service": "nestjs-api",
+    // "workspaceFolder": "/workspace",
+    
     // Features to add to the dev container. More info: https://containers.dev/features.
     // "features": {},
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    "forwardPorts": [3333]
+    "forwardPorts": [
+        3333
+    ],
+    "runArgs": [
+        "--network=freecodecamp"
+    ]
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "yarn install",
     // Configure tool-specific properties.

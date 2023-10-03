@@ -14,6 +14,7 @@
         "pkief.material-icon-theme",
         "esbenp.prettier-vscode",
         "tabnine.tabnine-vscode",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "jeff-hykin.better-dockerfile-syntax"
     ]
 }
