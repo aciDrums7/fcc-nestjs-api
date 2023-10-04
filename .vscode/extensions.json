@@ -15,6 +15,7 @@
         "esbenp.prettier-vscode",
         "tabnine.tabnine-vscode",
         "redhat.vscode-yaml",
-        "jeff-hykin.better-dockerfile-syntax"
+        "jeff-hykin.better-dockerfile-syntax",
+        "prisma.prisma"
     ]
 }
