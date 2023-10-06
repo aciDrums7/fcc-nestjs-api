@@ -2,9 +2,9 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   // needed for arm processors, like Apple M2 chip 
-  binaryTargets = "darwin-arm64"
+  binaryTargets = ["native", "darwin-arm64"]
 }
 
 datasource db {
@@ -17,11 +17,16 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  email String
-  hash  String
+  email    String @unique
+  password String
 
   firstName String?
   lastName  String?
+
+  bookmarks Bookmark[]
+
+  // Like Table(name) in Spring Data JPA
+  @@map("users")
 }
 
 model Bookmark {
@@ -32,4 +37,9 @@ model Bookmark {
   title       String
   description String?
   link        String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@map("bookmarks")
 }
