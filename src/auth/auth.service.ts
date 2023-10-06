@@ -25,6 +25,7 @@ export class AuthService {
                     updatedAt: true,
                 },
             });
+            //3 return the new user
             return user;
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
@@ -37,10 +38,29 @@ export class AuthService {
                 throw error;
             }
         }
-        //3 return the new user
     }
 
-    login() {
-        return { msg: `I've logged in` };
+    async login(dto: AuthDto) {
+        //1 find the user by id
+        //! if user doesn't exist throw exception
+        const user = await this.prisma.user.findUnique({
+            where: {
+                email: dto.email,
+            },
+        });
+        if (!user) throw new ForbiddenException('Credentials Incorrect');
+
+        //2 compare password
+        //! if password incorrect throw exception
+        const isPasswordCorrect = await argon.verify(
+            user.password,
+            dto.password,
+        );
+        if (!isPasswordCorrect)
+            throw new ForbiddenException('Credentials Incorrect');
+
+        //3 send back the user
+        delete user.password;
+        return user;
     }
 }
