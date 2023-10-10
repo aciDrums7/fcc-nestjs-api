@@ -1,21 +1,28 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { AuthDto } from 'src/dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import * as argon from 'argon2';
+import { JwtService } from '@nestjs/jwt';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import * as argon from 'argon2';
+import { AuthDto } from 'src/dto';
+import { JwtDto } from 'src/dto/jwt.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
-    constructor(private prisma: PrismaService) {}
+    constructor(
+        private prismaService: PrismaService,
+        private userService: UsersService,
+        private jwtService: JwtService,
+    ) {}
 
-    async signup(dto: AuthDto) {
+    async signup(authDto: AuthDto) {
         //1 generate the password hash
-        const hashedPassword = await argon.hash(dto.password);
+        const hashedPassword = await argon.hash(authDto.password);
         //2 save the new user in the db
         try {
-            const user = await this.prisma.user.create({
-                data: { email: dto.email, password: hashedPassword },
-                select: {
+            const user = await this.userService.createUser(
+                { email: authDto.email, password: hashedPassword },
+                {
                     id: false,
                     firstName: true,
                     lastName: true,
@@ -24,7 +31,7 @@ export class AuthService {
                     createdAt: true,
                     updatedAt: true,
                 },
-            });
+            );
             //3 return the new user
             return user;
         } catch (error) {
@@ -40,27 +47,27 @@ export class AuthService {
         }
     }
 
-    async login(dto: AuthDto) {
+    async login(authDto: AuthDto): Promise<JwtDto> {
         //1 find the user by id
         //! if user doesn't exist throw exception
-        const user = await this.prisma.user.findUnique({
-            where: {
-                email: dto.email,
-            },
-        });
-        if (!user) throw new ForbiddenException('Credentials Incorrect');
+        try {
+            const user = await this.userService.findOne(authDto.email);
+            if (!user) throw new ForbiddenException('Credentials Incorrect');
 
-        //2 compare password
-        //! if password incorrect throw exception
-        const isPasswordCorrect = await argon.verify(
-            user.password,
-            dto.password,
-        );
-        if (!isPasswordCorrect)
-            throw new ForbiddenException('Credentials Incorrect');
+            //2 compare password
+            //! if password incorrect throw exception
+            const isPasswordCorrect = await argon.verify(
+                user.password,
+                authDto.password,
+            );
+            if (!isPasswordCorrect)
+                throw new ForbiddenException('Credentials Incorrect');
 
-        //3 send back the user
-        delete user.password;
-        return user;
+            const payload = { sub: user.id, username: user.email };
+            const accessToken = await this.jwtService.signAsync(payload);
+            return new JwtDto(accessToken);
+        } catch (error) {
+            throw error;
+        }
     }
 }

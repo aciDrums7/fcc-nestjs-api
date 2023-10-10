@@ -25,7 +25,7 @@ model User {
 
   bookmarks Bookmark[]
 
-  // Like Table(name) in Spring Data JPA
+  // Like Table('<name>') in Spring Data JPA
   @@map("users")
 }
 
