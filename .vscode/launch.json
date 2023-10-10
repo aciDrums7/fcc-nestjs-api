@@ -4,7 +4,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug Nest App",
+            "name": "Debug: fcc-nestjs-api",
             "args": [
                 "${workspaceFolder}/src/main.ts"
             ],
@@ -21,6 +21,20 @@
             "cwd": "${workspaceRoot}",
             "console": "integratedTerminal",
             "protocol": "inspector"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Container Debug: fcc-nestjs-api",
+            "remoteRoot": "/usr/src/app",
+            "localRoot": "${workspaceFolder}",
+            "protocol": "inspector",
+            "port": 9229,
+            "restart": true,
+            "address": "0.0.0.0",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
         }
     ]
 }

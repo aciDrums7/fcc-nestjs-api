@@ -1,24 +1,43 @@
-version: '3.8'
+version: "3.8"
 services:
+    app:
+        build:
+            context: .
+            target: development
+        container_name: nestjs
+        # command: 
+        # network_mode: service:postgres
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        ports:
+            - 3333:3333
+            - 9229:9229
+        env_file:
+            - .env
+        networks:
+            - freecodecamp
+        depends_on:
+            - postgres
+
     postgres:
         image: postgres:latest
+        container_name: postgres
+        volumes:
+        - pgdata:/var/lib/postgresql/data
         ports:
             - 5432:5432
         environment:
             POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
+            POSTGRES_PASSWORD: Postgres7!
             POSTGRES_DB: nestjs-api
-        networks:
-            - freecodecamp
-
-    nestjs-api:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        ports:
-            - 3333:3333
+            PG_DATA: /var/lib/postgresql/data
         networks:
             - freecodecamp
 
 networks:
     freecodecamp:
+        name: freecodecamp
+        external: true
+volumes:
+    pgdata:
