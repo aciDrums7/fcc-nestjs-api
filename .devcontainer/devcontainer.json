@@ -26,9 +26,9 @@
 	// "shutdownAction": "none",
 	// Uncomment the next line to run commands after the container is created.
 	"postCreateCommand": {
-		"git:safe-directory": "sudo git config --global --add safe.directory /usr/src/app",
-		"git:user.name": "sudo git config --global user.name aciDrums7",
-		"git:user.email": "sudo git config --global user.email edoardo.carradori.96@gmail.com",
+		"git:safe-directory": "git config --global --add safe.directory /usr/src/app",
+		"git:user.name": "git config --global user.name aciDrums7",
+		"git:user.email": "git config --global user.email edoardo.carradori.96@gmail.com",
 		"db:migration": "sudo yarn prisma migrate dev"
 	},
 	// Configure tool-specific properties.
