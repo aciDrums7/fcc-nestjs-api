@@ -6,7 +6,7 @@ COPY package*.json yarn.lock ./
 
 RUN yarn install
 
-RUN yarn add @nestjs/cli
+RUN npm install -g @nestjs/cli
 
 RUN yarn add --dev prisma@latest
 
