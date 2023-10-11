@@ -14,10 +14,9 @@ export class UsersService {
         });
     }
 
-    async createUser(data: any, selectArgs: any) {
+    async createUser(data: any): Promise<User> {
         return await this.prismaService.user.create({
             data: data,
-            select: selectArgs,
         });
     }
 }

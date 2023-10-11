@@ -1,5 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import * as argon from 'argon2';
 import { AuthDto } from 'src/dto';
@@ -9,19 +11,20 @@ import { UsersService } from 'src/resources/users/users.service';
 @Injectable()
 export class AuthService {
     constructor(
+        private configService: ConfigService,
         private userService: UsersService,
         private jwtService: JwtService,
     ) {}
 
-    async signup(authDto: AuthDto) {
+    async signup(authDto: AuthDto): Promise<JwtDto> {
         //1 generate the password hash
         const hashedPassword = await argon.hash(authDto.password);
         //2 save the new user in the db
         try {
-            const user = await this.userService.createUser(
+            /* const user: Prisma.UserSelect = await this.userService.createUser(
                 { email: authDto.email, password: hashedPassword },
                 {
-                    id: false,
+                    id: true,
                     firstName: true,
                     lastName: true,
                     email: true,
@@ -29,9 +32,13 @@ export class AuthService {
                     createdAt: true,
                     updatedAt: true,
                 },
-            );
-            //3 return the new user
-            return user;
+            ); */
+            const user: User = await this.userService.createUser({
+                email: authDto.email,
+                password: hashedPassword,
+            });
+            //3 return a JWT based on the user just created
+            return this.createJwt(user.id, user.email);
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 //? Prisma has specific errors, P2022 -> "Unique constraint failed on the {constraint}"
@@ -61,11 +68,18 @@ export class AuthService {
             if (!isPasswordCorrect)
                 throw new ForbiddenException('Credentials Incorrect');
 
-            const payload = { sub: user.id, username: user.email };
-            const accessToken = await this.jwtService.signAsync(payload);
-            return new JwtDto(accessToken);
+            return this.createJwt(user.id, user.email);
         } catch (error) {
             throw error;
         }
+    }
+
+    private async createJwt(userId: number, username: string): Promise<JwtDto> {
+        const payload = { sub: userId, username: username };
+        const accessToken = await this.jwtService.signAsync(payload, {
+            expiresIn: '21m',
+            secret: this.configService.get('JWT_SECRET'),
+        });
+        return new JwtDto(accessToken);
     }
 }

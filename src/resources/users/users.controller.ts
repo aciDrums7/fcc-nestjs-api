@@ -1,11 +1,14 @@
 import { Controller, Get, UseGuards, Request } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { JwtGuard } from 'src/guards';
 
 @Controller('users')
 export class UsersController {
-    @UseGuards(AuthGuard)
-    @Get('profile')
-    getProfile(@Request() req) {
+    //? the value passed to the AuthGuard refers to the Passport strategy to use
+    //5 (in the implementation of a strategy, we pass a string value, in this case 'jwt')
+    @UseGuards(JwtGuard)
+    @Get('currentUser')
+    getCurrentUser(@Request() req) {
+        //? user object is appended by the validate method in the jwt strategy impl
         return req.user;
     }
 }
