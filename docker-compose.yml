@@ -5,7 +5,7 @@ services:
             context: .
             target: development
         container_name: nestjs
-        # command: 
+        command: yarn start:debug
         # network_mode: service:postgres
         volumes:
             - .:/usr/src/app

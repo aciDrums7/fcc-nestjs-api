@@ -4,7 +4,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug: fcc-nestjs-api",
+            "name": "Run & Debug: fcc-nestjs-api",
             "args": [
                 "${workspaceFolder}/src/main.ts"
             ],
@@ -25,7 +25,7 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "Container Debug: fcc-nestjs-api",
+            "name": "Debug: fcc-nestjs-api",
             "remoteRoot": "/usr/src/app",
             "localRoot": "${workspaceFolder}",
             "protocol": "inspector",

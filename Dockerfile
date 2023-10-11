@@ -14,4 +14,4 @@ RUN yarn add @prisma/client@latest
 
 COPY . .
 
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
