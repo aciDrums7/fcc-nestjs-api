@@ -30,7 +30,7 @@ services:
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: Postgres7!
-            POSTGRES_DB: nestjs-api
+            POSTGRES_DB: nestjs
             PG_DATA: /var/lib/postgresql/data
         networks:
             - freecodecamp
@@ -38,12 +38,15 @@ services:
     test-db:
         image: postgres:latest
         container_name: test-db
+        command: -p 2345
+        expose: 
+        - 2345
         ports:
-            - 5431:5432
+            - 2345:2345
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: Postgres7!
-            POSTGRES_DB: nestjs-api-test
+            POSTGRES_DB: nestjs
         networks:
             - freecodecamp
 
