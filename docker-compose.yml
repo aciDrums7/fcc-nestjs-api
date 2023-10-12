@@ -6,7 +6,7 @@ services:
             target: development
         container_name: nestjs
         command: yarn start:debug
-        # network_mode: service:postgres
+        # network_mode: service:dev-db
         volumes:
             - .:/usr/src/app
             - /usr/src/app/node_modules
@@ -20,11 +20,11 @@ services:
         depends_on:
             - postgres
 
-    postgres:
+    dev-db:
         image: postgres:latest
         container_name: postgres
         volumes:
-        - pgdata:/var/lib/postgresql/data
+            - pgdata:/var/lib/postgresql/data
         ports:
             - 5432:5432
         environment:
@@ -32,6 +32,18 @@ services:
             POSTGRES_PASSWORD: Postgres7!
             POSTGRES_DB: nestjs-api
             PG_DATA: /var/lib/postgresql/data
+        networks:
+            - freecodecamp
+
+    test-db:
+        image: postgres:latest
+        container_name: postgres
+        ports:
+            - 5437:5432
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: Postgres7!
+            POSTGRES_DB: nestjs-api-test
         networks:
             - freecodecamp
 

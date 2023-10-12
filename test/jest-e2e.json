@@ -1,6 +1,15 @@
 {
-    "moduleFileExtensions": ["js", "json", "ts"],
+    "moduleFileExtensions": [
+        "js",
+        "json",
+        "ts"
+    ],
     "rootDir": ".",
+    
+    //! Fundamental to make Jest recognize relative imports (src/app.module)
+    //! instead of only relative imports (../src/app.module)
+    "modulePaths": ["../"],
+
     "testEnvironment": "node",
     "testRegex": ".e2e-spec.ts$",
     "transform": {
