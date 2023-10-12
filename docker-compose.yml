@@ -18,11 +18,11 @@ services:
         networks:
             - freecodecamp
         depends_on:
-            - postgres
+            - dev-db
 
     dev-db:
         image: postgres:latest
-        container_name: postgres
+        container_name: dev-db
         volumes:
             - pgdata:/var/lib/postgresql/data
         ports:
@@ -37,9 +37,9 @@ services:
 
     test-db:
         image: postgres:latest
-        container_name: postgres
+        container_name: test-db
         ports:
-            - 5437:5432
+            - 5431:5432
         environment:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: Postgres7!
