@@ -56,7 +56,7 @@ export class AuthService {
         //1 find the user by id
         //! if user doesn't exist throw exception
         try {
-            const user = await this.userService.findOne(authDto.email);
+            const user = await this.userService.findUserByEmail(authDto.email);
             if (!user) throw new ForbiddenException('Credentials Incorrect');
 
             //2 compare password
