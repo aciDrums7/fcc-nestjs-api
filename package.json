@@ -22,7 +22,7 @@
         "prisma:dev:deploy": "prisma migrate deploy",
         "db:dev:restart": "prisma migrate reset && yarn prisma:dev:deploy",
         "prisma:test:deploy": "dotenv -e .env.test -- yarn prisma migrate deploy",
-        "db:test:restart": "dotenv -e .env.test -- prisma migrate reset && yarn prisma:test:deploy"
+        "db:test:restart": "yes | dotenv -e .env.test -- prisma migrate reset --force && yarn prisma:test:deploy"
     },
     "dependencies": {
         "@nestjs/common": "^10.0.0",

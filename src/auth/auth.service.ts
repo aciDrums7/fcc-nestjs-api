@@ -4,8 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import * as argon from 'argon2';
-import { AuthDto } from 'src/dto';
-import { JwtDto } from 'src/dto/jwt.dto';
+import { AuthDto, JwtDto } from 'src/dtos';
 import { UsersService } from 'src/resources/users/users.service';
 
 @Injectable()
