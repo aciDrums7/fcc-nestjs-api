@@ -2,36 +2,20 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
 {
 	"name": "fcc-nestjs-api",
-	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
-	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
 	"dockerComposeFile": [
 		"../docker-compose.yml"
 	],
-	// The 'service' property is the name of the service for the container that VS Code should
-	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
 	"service": "app",
-	// The optional 'workspaceFolder' property is the path VS Code should open by default when
-	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
 	"workspaceFolder": "/usr/src/app",
 	"shutdownAction": "stopCompose",
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [
-	// 	"nestjs:3333"
-	// ],
-	// Uncomment the next line if you want start specific services in your Docker Compose config.
-	// "runServices": [],
-	// Uncomment the next line if you want to keep your containers running after VS Code shuts down.
-	// "shutdownAction": "none",
-	// Uncomment the next line to run commands after the container is created.
-	"postCreateCommand": {
+	"containerUser": "root",
+	"onCreateCommand": {
 		"git:safe-directory": "git config --global --add safe.directory /usr/src/app",
 		"git:user.name": "git config --global user.name aciDrums7",
 		"git:user.email": "git config --global user.email edoardo.carradori.96@gmail.com",
-		"db:migration": "sudo yarn prisma migrate dev"
+		"nestjs:cli": "yarn add global @nestjs/cli",
+		"db:migration": "yarn prisma migrate dev"
 	},
-	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -54,6 +38,4 @@
 			]
 		}
 	}
-	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "devcontainer"
 }

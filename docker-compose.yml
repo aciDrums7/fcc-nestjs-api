@@ -1,19 +1,10 @@
-version: '3.8'
+version: "3.8"
 services:
     app:
         build:
             context: .
             target: development
         container_name: nestjs
-        command: 
-        #? Typical dev container entrypoint command
-        - /bin/sh
-        - -c
-        - |
-            echo fcc-nestjs-api started!
-            trap "exit 0" 15
-            exec "$@"
-            while sleep 1 & wait $!; do :; done
         volumes:
             - .:/usr/src/app
             - node_modules:/usr/src/app/node_modules
@@ -26,7 +17,6 @@ services:
             - freecodecamp
         depends_on:
             - dev-db
-        user: root
 
     dev-db:
         image: postgres:latest
@@ -62,6 +52,7 @@ volumes:
     dev-db:
     test-db:
     node_modules:
+
 networks:
     freecodecamp:
         name: freecodecamp

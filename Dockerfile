@@ -4,14 +4,22 @@ WORKDIR usr/src/app
 
 COPY package*.json yarn.lock ./
 
+RUN npm install -g npm@latest
+
 RUN yarn install
-
-RUN npm install -g @nestjs/cli
-
-RUN yarn add --dev prisma@latest
-
-RUN yarn add @prisma/client@latest
 
 COPY . .
 
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+
+
+# ? Alternative dev container entrypoint command
+# CMD
+# - /bin/sh
+        # - -c
+        # - |
+        #     echo fcc-nestjs-api started!
+        #     trap "exit 0" 15
+        #     exec "$@"
+        #     while sleep 1 & wait $!; do :; done
