@@ -2,16 +2,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run & Debug: fcc-nestjs-api",
             "type": "node",
             "request": "launch",
-            "name": "Run & Debug: fcc-nestjs-api",
             "args": [
                 "${workspaceFolder}/src/main.ts"
             ],
             "runtimeArgs": [
                 "--nolazy",
-                "--watch"
-            ],
+                "-r",
+                "ts-node/register",
+                "-r",
+                "tsconfig-paths/register"
+              ],
             "sourceMaps": true,
             "envFile": "${workspaceFolder}/.env",
             "cwd": "${workspaceRoot}",
@@ -19,9 +22,9 @@
             "protocol": "inspector"
         },
         {
+            "name": "Debug: fcc-nestjs-api",
             "type": "node",
             "request": "attach",
-            "name": "Debug: fcc-nestjs-api",
             "remoteRoot": "/usr/src/app",
             "localRoot": "${workspaceFolder}",
             "protocol": "inspector",

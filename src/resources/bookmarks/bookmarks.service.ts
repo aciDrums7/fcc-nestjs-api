@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+    ForbiddenException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { Bookmark } from '@prisma/client';
 import { CreateBookmarkDto, EditBookmarkDto } from 'src/dtos';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -17,11 +21,16 @@ export class BookmarksService {
     }
 
     async getBookmarkById(bookmarkId: number): Promise<Bookmark> {
-        return await this.prismaService.bookmark.findUnique({
+        const bookmark = await this.prismaService.bookmark.findUnique({
             where: {
                 id: bookmarkId,
             },
         });
+        if (!bookmark)
+            throw new NotFoundException(
+                `Bookmark with id: ${bookmarkId} not found`,
+            );
+        return bookmark;
     }
 
     async createBookmark(

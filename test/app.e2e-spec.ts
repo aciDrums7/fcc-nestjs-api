@@ -10,7 +10,9 @@ import {
 } from 'src/dtos';
 import { PrismaService } from 'src/prisma/prisma.service';
 
-const URL = 'http://localhost:3337/';
+const PORT = 3001;
+const URL = `http://localhost:${PORT}/`;
+
 const AUTH = 'auth/';
 const USERS = 'users/';
 const BOOKMARKS = 'bookmarks/';
@@ -26,7 +28,7 @@ describe('App e2e', () => {
         app = moduleRef.createNestApplication();
         app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
         await app.init();
-        await app.listen(3337);
+        await app.listen(parseInt(`${PORT}`));
 
         prisma = app.get(PrismaService);
         await prisma.cleanDb();
@@ -147,7 +149,6 @@ describe('App e2e', () => {
                     .expectStatus(HttpStatus.OK)
                     .expectBodyContains(userDto.firstName)
                     .expectBodyContains(userDto.email);
-                // .inspect();
             });
         });
     });
@@ -211,6 +212,7 @@ describe('App e2e', () => {
             });
         });
 
+        //TODO: fix this following tests!
         describe('Edit bookmark by id', () => {
             it('should get bookmark by id', () => {
                 return pactum
@@ -222,7 +224,8 @@ describe('App e2e', () => {
                     .expectStatus(HttpStatus.OK)
                     .expectBodyContains(editBookmarkDto.description)
                     .expectBodyContains(createBookmarkDto.title)
-                    .expectBodyContains(createBookmarkDto.link);
+                    .expectBodyContains(createBookmarkDto.link)
+                    .inspect();
             });
         });
 
