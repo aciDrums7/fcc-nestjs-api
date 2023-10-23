@@ -9,6 +9,12 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private usersService: UsersService) {}
 
+    @Get('')
+    getAllUsers() {
+        //? user object is appended by the validate method in the jwt strategy impl
+        return this.usersService.getAllUsers();
+    }
+
     //? the value passed to the AuthGuard refers to the Passport strategy to use
     //5 (in the implementation of a strategy, we pass a string value, in this case 'jwt')
     @Get('currentUser')

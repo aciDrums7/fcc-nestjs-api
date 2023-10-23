@@ -11,9 +11,7 @@ services:
         ports:
             - 3000:3000
             # - 9229:9229
-        env_file:
-            - .env
-        networks:
+        networks: 
             - freecodecamp
         depends_on:
             - dev-db
@@ -30,7 +28,7 @@ services:
             POSTGRES_PASSWORD: Postgres7!
             POSTGRES_DB: nestjs
             # PG_DATA: /var/lib/postgresql/data
-        networks:
+        networks: 
             - freecodecamp
 
     test-db:
@@ -45,7 +43,7 @@ services:
             POSTGRES_PASSWORD: Postgres7!
             POSTGRES_DB: nestjs
             # PG_DATA: /var/lib/postgresql/data
-        networks:
+        networks: 
             - freecodecamp
 
 volumes:

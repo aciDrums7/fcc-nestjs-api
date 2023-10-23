@@ -8,13 +8,12 @@
 	"service": "app",
 	"workspaceFolder": "/usr/src/app",
 	"shutdownAction": "stopCompose",
-	"containerUser": "root",
-	"onCreateCommand": {
+	"postCreateCommand": {
+		"nestjs:cli": "npm i -g @nestjs/cli",
 		"git:safe-directory": "git config --global --add safe.directory /usr/src/app",
 		"git:user.name": "git config --global user.name aciDrums7",
 		"git:user.email": "git config --global user.email edoardo.carradori.96@gmail.com",
-		"nestjs:cli": "yarn add global @nestjs/cli",
-		"db:migration": "yarn prisma migrate dev"
+		"db:migration": "sudo yarn prisma migrate dev"
 	},
 	"customizations": {
 		"vscode": {

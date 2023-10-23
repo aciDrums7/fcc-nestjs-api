@@ -139,7 +139,7 @@ describe('App e2e', () => {
             it('should edit current user', () => {
                 const userDto: EditUserDto = {
                     firstName: 'Edoardo',
-                    email: 'acidrums7@gmail.com',
+                    email: 'test-edit@gmail.com',
                 };
                 return pactum
                     .spec()
@@ -225,7 +225,6 @@ describe('App e2e', () => {
                     .expectBodyContains(editBookmarkDto.description)
                     .expectBodyContains(createBookmarkDto.title)
                     .expectBodyContains(createBookmarkDto.link)
-                    .inspect();
             });
         });
 
